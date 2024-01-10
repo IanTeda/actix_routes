@@ -42,6 +42,44 @@ pub mod handlers {
             HttpResponse::Ok().body(response)
         }
     }
+
+    // pub mod next_things {
+    //     use actix_web::{delete, get, post, put, web, HttpResponse, Responder};
+    //     use serde::Deserialize;
+
+    //     #[derive(Deserialize)]
+    //     struct Info {
+    //         next_thing_id: String,
+    //     }
+
+    //     #[get("")]
+    //     async fn index() -> impl Responder {
+    //         HttpResponse::Ok().body("Get one next_thing.")
+    //     }
+
+    //     #[get("{next_thing_id}")]
+    //     async fn get_by_id(info: web::Path<Info>) -> impl Responder {
+    //         let response = format!("Get thing {}.", info.next_thing_id);
+    //         HttpResponse::Ok().body(response)
+    //     }
+
+    //     #[post("")]
+    //     async fn create() -> impl Responder {
+    //         HttpResponse::Ok().body("Add a next_thing.")
+    //     }
+
+    //     #[put("{thing_id}")]
+    //     async fn update_by_id(info: web::Path<Info>) -> impl Responder {
+    //         let response = format!("Update thing {}.", info.next_thing_id);
+    //         HttpResponse::Ok().body(response)
+    //     }
+
+    //     #[delete("{thing_id}")]
+    //     async fn remove_by_id(info: web::Path<Info>) -> impl Responder {
+    //         let response = format!("Delete next_thing {}.", info.next_thing_id);
+    //         HttpResponse::Ok().body(response)
+    //     }
+    // }
 }
 
 pub mod routes {
@@ -55,6 +93,14 @@ pub mod routes {
             .service(things::update_by_id)
             .service(things::remove_by_id);
     }
+
+    // pub fn next_things(config: &mut web::ServiceConfig) {
+    //     config.service(next_things::index)
+    //         .service(next_things::get_by_id)
+    //         .service(next_things::create)
+    //         .service(next_things::update_by_id)
+    //         .service(next_things::remove_by_id);
+    // }
 }
 
 pub mod api {
@@ -62,7 +108,9 @@ pub mod api {
     use actix_web::web;
 
     pub fn v1(config: &mut web::ServiceConfig) {
-        config.service(web::scope("/things").configure(routes::things));
+        config
+            .service(web::scope("/things").configure(routes::things));
+            // .service(web::scope("/next_things").configure(routes::next_things));
     }
 }
 
